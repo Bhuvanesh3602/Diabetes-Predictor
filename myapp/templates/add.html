@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Diabetes Prediction</title>
+  </head>
+  <body
+    style="text-align: center; margin-top: 50px; font-family: Arial, sans-serif"
+  >
+    <h1 style="color: blueviolet">Diabetes Predictor</h1>
+
+    <form method="post" action="/add/">
+      {% csrf_token %}
+      <center>
+        <table border="3" cellpadding="10" style="border-collapse: collapse">
+          <tr>
+            <td><label for="num1">Pregnancies</label></td>
+            <td><input type="number" name="num1" required step="any" /></td>
+          </tr>
+          <tr>
+            <td><label for="num2">Glucose</label></td>
+            <td><input type="number" name="num2" required step="any" /></td>
+          </tr>
+          <tr>
+            <td><label for="num3">BloodPressure</label></td>
+            <td><input type="number" name="num3" required step="any" /></td>
+          </tr>
+          <tr>
+            <td><label for="num4">SkinThickness</label></td>
+            <td><input type="number" name="num4" required step="any" /></td>
+          </tr>
+          <tr>
+            <td><label for="num5">Insulin</label></td>
+            <td><input type="number" name="num5" required step="any" /></td>
+          </tr>
+          <tr>
+            <td><label for="num6">BMI</label></td>
+            <td><input type="number" name="num6" required step="any" /></td>
+          </tr>
+          <tr>
+            <td><label for="num7">DiabetesPedigreeFunction</label></td>
+            <td><input type="number" name="num7" required step="any" /></td>
+          </tr>
+          <tr>
+            <td><label for="num8">Age</label></td>
+            <td><input type="number" name="num8" required step="any" /></td>
+          </tr>
+          <tr>
+            <td><button type="reset">Reset</button></td>
+            <td><button type="submit">Predict</button></td>
+          </tr>
+        </table>
+      </center>
+    </form>
+
+    {% if result is not None %} {% if result == 1 %}
+    <h2 style="color: red">
+      ⚠️ You may have diabetes. Please consult a doctor.
+    </h2>
+    {% else %}
+    <h2 style="color: green">✅ You do not have diabetes.</h2>
+    {% endif %} {% endif %} {% if report %}
+    <p style="color: crimson">{{ report }}</p>
+    {% endif %}
+  </body>
+</html>
