@@ -1,0 +1,35 @@
+# 🚀 Diabetes Predictor - Quick Commands
+
+## Activate Virtual Environment
+& D:\Project\Diabetes-Predictor\diabetes_env\Scripts\Activate.ps1
+
+## Run Server
+python manage.py runserver
+
+## Access Application
+http://127.0.0.1:8000/
+
+## New Pages:
+- Home: http://127.0.0.1:8000/
+- Predict: http://127.0.0.1:8000/predict/
+- Dashboard: http://127.0.0.1:8000/dashboard/
+- History: http://127.0.0.1:8000/history/
+
+## Install Dependencies
+pip install -r requirements.txt
+
+## MySQL Setup (Optional)
+pip install mysqlclient
+# Then edit settings.py to configure MySQL
+
+## Troubleshooting
+# If dashboard/history not working:
+1. Make sure templates exist in myapp/templates/
+2. Check submissions.csv has data
+3. Restart server
+4. See TROUBLESHOOTING.md for details
+
+## Useful Commands
+python manage.py check          # Check for errors
+python manage.py migrate        # Run migrations
+python manage.py createsuperuser # Create admin user

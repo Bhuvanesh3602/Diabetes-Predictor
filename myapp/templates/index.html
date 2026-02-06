@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="text-center py-12">
+    <div class="inline-block animate-bounce mb-6">
+        <i class="fas fa-heartbeat text-7xl text-indigo-600"></i>
+    </div>
+    <h1 class="text-5xl font-bold text-gray-900 mb-4">
+        AI-Powered Diabetes Risk Assessment
+    </h1>
+    <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+        Get instant diabetes risk predictions using advanced machine learning technology. 
+        Fast, accurate, and confidential.
+    </p>
+    <div class="flex justify-center gap-4">
+        <a href="{% url 'predict' %}" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-200">
+            <i class="fas fa-stethoscope mr-2"></i> Start Prediction
+        </a>
+        <a href="{% url 'dashboard' %}" class="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg border-2 border-indigo-600 hover:bg-indigo-50 transition duration-200">
+            <i class="fas fa-chart-bar mr-2"></i> View Dashboard
+        </a>
+    </div>
+</div>
+
+<!-- Features Grid -->
+<div class="grid md:grid-cols-3 gap-8 mt-16">
+    <div class="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-brain text-3xl text-indigo-600"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">AI-Powered</h3>
+        <p class="text-gray-600">Advanced machine learning model trained on thousands of medical records for accurate predictions.</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+        <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-bolt text-3xl text-purple-600"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">Instant Results</h3>
+        <p class="text-gray-600">Get your diabetes risk assessment in seconds with detailed health recommendations.</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+        <div class="bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-shield-alt text-3xl text-pink-600"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-3">Secure & Private</h3>
+        <p class="text-gray-600">Your health data is encrypted and stored securely. We prioritize your privacy.</p>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-2xl p-12 mt-16 text-white">
+    <h2 class="text-3xl font-bold text-center mb-8">Why Early Detection Matters</h2>
+    <div class="grid md:grid-cols-4 gap-8 text-center">
+        <div>
+            <div class="text-5xl font-bold mb-2">463M</div>
+            <div class="text-indigo-100">Adults with Diabetes</div>
+        </div>
+        <div>
+            <div class="text-5xl font-bold mb-2">50%</div>
+            <div class="text-indigo-100">Are Undiagnosed</div>
+        </div>
+        <div>
+            <div class="text-5xl font-bold mb-2">90%</div>
+            <div class="text-indigo-100">Type 2 Diabetes</div>
+        </div>
+        <div>
+            <div class="text-5xl font-bold mb-2">100%</div>
+            <div class="text-indigo-100">Preventable</div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works -->
+<div class="mt-16">
+    <h2 class="text-4xl font-bold text-center text-gray-900 mb-12">How It Works</h2>
+    <div class="grid md:grid-cols-4 gap-6">
+        <div class="text-center">
+            <div class="bg-indigo-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
+            <h3 class="font-bold text-lg mb-2">Enter Data</h3>
+            <p class="text-gray-600">Input your medical parameters</p>
+        </div>
+        <div class="text-center">
+            <div class="bg-purple-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
+            <h3 class="font-bold text-lg mb-2">AI Analysis</h3>
+            <p class="text-gray-600">ML model processes your data</p>
+        </div>
+        <div class="text-center">
+            <div class="bg-pink-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
+            <h3 class="font-bold text-lg mb-2">Get Results</h3>
+            <p class="text-gray-600">Receive instant prediction</p>
+        </div>
+        <div class="text-center">
+            <div class="bg-red-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">4</div>
+            <h3 class="font-bold text-lg mb-2">Take Action</h3>
+            <p class="text-gray-600">Follow recommendations</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
