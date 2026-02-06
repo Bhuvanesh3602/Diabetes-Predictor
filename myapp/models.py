@@ -15,7 +15,6 @@ class Prediction(models.Model):
     
     class Meta:
         ordering = ['-timestamp']
-        db_table = 'diabetes_predictions'
     
     def __str__(self):
         return f"Prediction {self.id} - {self.timestamp}"

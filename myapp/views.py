@@ -1,13 +1,15 @@
 from django.shortcuts import render
 from django.conf import settings
-from django.http import JsonResponse
 import numpy as np
 import joblib
 import os
-import csv
-import pandas as pd
 from datetime import datetime
-from .models import Prediction
+from pymongo import MongoClient
+
+# MongoDB connection
+def get_mongo_db():
+    client = MongoClient('mongodb://127.0.0.1:27017/')
+    return client['Diabetes']
 
 def index(request):
     return render(request, 'index.html')
@@ -48,29 +50,22 @@ def add_numbers(request):
             # Generate recommendations
             recommendations = generate_recommendations(input_data, result)
 
-            # Save to database
-            Prediction.objects.create(
-                pregnancies=inputs[0],
-                glucose=inputs[1],
-                blood_pressure=inputs[2],
-                skin_thickness=inputs[3],
-                insulin=inputs[4],
-                bmi=inputs[5],
-                diabetes_pedigree_function=inputs[6],
-                age=inputs[7],
-                outcome=result,
-                risk_level=risk_level
-            )
-
-            # Also save to CSV for backup
-            file_path = os.path.join(settings.BASE_DIR, 'myapp', 'submissions.csv')
-            file_empty = not os.path.exists(file_path) or os.stat(file_path).st_size == 0
-
-            with open(file_path, mode='a', newline='') as file:
-                writer = csv.writer(file)
-                if file_empty:
-                    writer.writerow(['Timestamp'] + labels + ['Outcome'])
-                writer.writerow([datetime.now().strftime('%Y-%m-%d %H:%M:%S')] + inputs + [result])
+            # Save to MongoDB
+            db = get_mongo_db()
+            prediction_doc = {
+                'timestamp': datetime.now(),
+                'pregnancies': inputs[0],
+                'glucose': inputs[1],
+                'blood_pressure': inputs[2],
+                'skin_thickness': inputs[3],
+                'insulin': inputs[4],
+                'bmi': inputs[5],
+                'diabetes_pedigree_function': inputs[6],
+                'age': inputs[7],
+                'outcome': result,
+                'risk_level': risk_level
+            }
+            db.predictions.insert_one(prediction_doc)
 
     except Exception as e:
         report = f"Error: {e}"
@@ -101,54 +96,56 @@ def generate_recommendations(data, result):
     return recs
 
 def history(request):
-    # Get data from database
-    predictions = Prediction.objects.all()[:10]
     history_data = []
-    
-    for pred in predictions:
-        history_data.append({
-            'Timestamp': pred.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
-            'Pregnancies': pred.pregnancies,
-            'Glucose': pred.glucose,
-            'BloodPressure': pred.blood_pressure,
-            'SkinThickness': pred.skin_thickness,
-            'Insulin': pred.insulin,
-            'BMI': pred.bmi,
-            'DiabetesPedigreeFunction': pred.diabetes_pedigree_function,
-            'Age': pred.age,
-            'Outcome': pred.outcome
-        })
-    
-    # Calculate stats
-    total = Prediction.objects.count()
-    positive = Prediction.objects.filter(outcome=1).count()
-    negative = Prediction.objects.filter(outcome=0).count()
-    
-    stats = {
-        'total': total,
-        'positive': positive,
-        'negative': negative
-    }
+    stats = {'total': 0, 'positive': 0, 'negative': 0}
+
+    try:
+        db = get_mongo_db()
+        predictions = list(db.predictions.find().sort('timestamp', -1).limit(10))
+        
+        for pred in predictions:
+            history_data.append({
+                'Timestamp': pred['timestamp'].strftime('%Y-%m-%d %H:%M:%S'),
+                'Glucose': pred['glucose'],
+                'BMI': pred['bmi'],
+                'BloodPressure': pred['blood_pressure'],
+                'Age': pred['age'],
+                'Outcome': pred['outcome']
+            })
+        
+        stats['total'] = db.predictions.count_documents({})
+        stats['positive'] = db.predictions.count_documents({'outcome': 1})
+        stats['negative'] = db.predictions.count_documents({'outcome': 0})
+    except Exception as e:
+        print(f"Error: {e}")
 
     return render(request, 'history.html', {'history': history_data, 'stats': stats})
 
 def dashboard(request):
-    # Get stats from database
-    from django.db.models import Avg
-    
-    total = Prediction.objects.count()
-    positive = Prediction.objects.filter(outcome=1).count()
-    negative = Prediction.objects.filter(outcome=0).count()
-    
-    avg_glucose = Prediction.objects.aggregate(Avg('glucose'))['glucose__avg'] or 0
-    avg_bmi = Prediction.objects.aggregate(Avg('bmi'))['bmi__avg'] or 0
-    
-    stats = {
-        'total': total,
-        'positive': positive,
-        'negative': negative,
-        'avg_glucose': round(avg_glucose, 1),
-        'avg_bmi': round(avg_bmi, 1)
-    }
+    stats = {'total': 0, 'positive': 0, 'negative': 0, 'avg_glucose': 0, 'avg_bmi': 0}
+
+    try:
+        db = get_mongo_db()
+        
+        stats['total'] = db.predictions.count_documents({})
+        stats['positive'] = db.predictions.count_documents({'outcome': 1})
+        stats['negative'] = db.predictions.count_documents({'outcome': 0})
+        
+        # Calculate averages
+        pipeline = [
+            {
+                '$group': {
+                    '_id': None,
+                    'avg_glucose': {'$avg': '$glucose'},
+                    'avg_bmi': {'$avg': '$bmi'}
+                }
+            }
+        ]
+        result = list(db.predictions.aggregate(pipeline))
+        if result:
+            stats['avg_glucose'] = round(result[0]['avg_glucose'], 1)
+            stats['avg_bmi'] = round(result[0]['avg_bmi'], 1)
+    except Exception as e:
+        print(f"Error: {e}")
 
     return render(request, 'dashboard.html', {'stats': stats})

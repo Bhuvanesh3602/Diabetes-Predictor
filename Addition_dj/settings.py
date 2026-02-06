@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'Addition_dj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# SQLite Configuration (Default)
+# SQLite Configuration (Using for Django admin/auth)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -83,20 +83,13 @@ DATABASES = {
     }
 }
 
-# MySQL Configuration (Uncomment to use MySQL)
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'diabetes_db',
-#         'USER': 'root',
-#         'PASSWORD': 'your_password',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-#         }
-#     }
-# }
+# MongoDB Configuration (for predictions data)
+MONGODB_SETTINGS = {
+    'host': '127.0.0.1',
+    'port': 27017,
+    'database': 'Diabetes',
+    'collection': 'predictions'
+}
 
 
 # Password validation

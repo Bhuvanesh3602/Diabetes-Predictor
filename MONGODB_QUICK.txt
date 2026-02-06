@@ -1,0 +1,38 @@
+# ⚡ MongoDB Quick Setup
+
+## Run These Commands:
+
+```bash
+# 1. Activate environment
+& D:\Project\Diabetes-Predictor\diabetes_env\Scripts\Activate.ps1
+
+# 2. Install MongoDB packages
+pip install pymongo djongo sqlparse
+
+# 3. Start MongoDB (if not running)
+net start MongoDB
+
+# 4. Run migrations
+python manage.py makemigrations
+python manage.py migrate
+
+# 5. Run server
+python manage.py runserver
+```
+
+## Test:
+1. Go to: http://127.0.0.1:8000/predict/
+2. Make a prediction
+3. Check: http://127.0.0.1:8000/dashboard/
+
+## View MongoDB Data:
+
+```bash
+mongo
+> use Diabetes
+> db.myapp_prediction.find()
+```
+
+## ✅ Done!
+All data now in MongoDB: mongodb://127.0.0.1:27017/Diabetes
+No CSV files used!

@@ -1,0 +1,75 @@
+# ⚡ Quick Commands - Database Setup
+
+## 🚀 Fast Setup (Run These Commands)
+
+```bash
+# 1. Activate environment
+& D:\Project\Diabetes-Predictor\diabetes_env\Scripts\Activate.ps1
+
+# 2. Create database tables
+python manage.py makemigrations myapp
+python manage.py migrate
+
+# 3. Create admin user (optional)
+python manage.py createsuperuser
+# Username: admin
+# Password: admin123
+
+# 4. Run server
+python manage.py runserver
+
+# 5. Open browser
+# http://127.0.0.1:8000/
+```
+
+## ✅ What This Does
+
+- Creates `diabetes_predictions` table in database
+- Stores all predictions in MySQL/SQLite
+- Dashboard reads from database (not CSV)
+- History reads from database (not CSV)
+
+## 🎯 Test It
+
+1. Go to: http://127.0.0.1:8000/predict/
+2. Fill form and submit
+3. Go to: http://127.0.0.1:8000/dashboard/
+4. See your data!
+
+## 🔧 If Errors
+
+### "No changes detected"
+```bash
+python manage.py makemigrations myapp --empty
+python manage.py migrate
+```
+
+### "Table already exists"
+```bash
+python manage.py migrate --fake-initial
+```
+
+### "Module not found"
+```bash
+pip install django pandas numpy scikit-learn
+```
+
+## 📊 View Data
+
+### Admin Panel:
+```
+http://127.0.0.1:8000/admin/
+Login: admin / admin123
+```
+
+### Django Shell:
+```bash
+python manage.py shell
+>>> from myapp.models import Prediction
+>>> Prediction.objects.count()
+>>> Prediction.objects.all()
+```
+
+## 🎉 Done!
+
+Dashboard now shows real-time data from database!
