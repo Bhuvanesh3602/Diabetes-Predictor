@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+diabetes_env/
+venv/
+env/
+ENV/
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+/media
+/staticfiles
+*.pot
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+
+# CSV files (optional - uncomment if you don't want to track)
+# *.csv
+submissions.csv
+submissions_backup.csv
+
+# Model files (large files - optional)
+# *.pkl
+
+# Documentation (keep only main README)
+MYSQL_SETUP.md
+MONGODB_SETUP.md
+MONGODB_QUICK.txt
+MONGODB_SIMPLE.md
+DATABASE_SETUP.md
+DATABASE_COMPLETE.md
+QUICK_DB_SETUP.txt
+DASHBOARD_FIX.md
+TROUBLESHOOTING.md
+QUICKSTART.md
+README_ADVANCED.md
+FIXES_APPLIED.md
+note_updated.txt
+fix_csv.py
+
+# Jupyter Notebooks
+*.ipynb_checkpoints
+.ipynb_checkpoints/
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Migrations (optional - uncomment to ignore)
+# */migrations/*.py
+# !*/migrations/__init__.py
