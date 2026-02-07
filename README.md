@@ -7,7 +7,7 @@
 ![Machine Learning](https://img.shields.io/badge/ML-Scikit--Learn-orange.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-*A machine learning-powered web application for diabetes risk prediction*
+*A machine learning-powered web application for diabetes risk prediction.*
 
 </div>
 
