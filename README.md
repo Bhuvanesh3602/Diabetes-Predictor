@@ -234,7 +234,7 @@ Key configuration in `Addition_dj/settings.py`:
 - [ ] Add mobile-responsive design
 - [ ] Include prediction history for users
 
-## 🐛 Troubleshooting
+## 🐛 Troubleshooting.
 
 ### Common Issues
 
